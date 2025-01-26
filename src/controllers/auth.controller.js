@@ -29,7 +29,7 @@ export const register = async (req, res) => {
             realName,
             lastName,
             phoneNumber,
-            secretWord, 
+            secretWord,
         });
 
         // Guardar el usuario en la base de datos
@@ -154,8 +154,8 @@ export const verifyToken = async (req, res) => {
 
 //Verfica si el token es valido no regresa ningun dato al fronend
 export const verifyTokenReset = async (req, res) => {
-    
-    const {token} = req.params;
+
+    const { token } = req.params;
 
 
     try {
@@ -163,7 +163,7 @@ export const verifyTokenReset = async (req, res) => {
 
         const user = await User.findById(decoded.id);
 
-        if(!user) return res.status(404).json({ message: 'Usuario no encontrado' });
+        if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
         res.status(200).json({ message: 'Token válido' });
 
@@ -175,16 +175,30 @@ export const verifyTokenReset = async (req, res) => {
 export const forgot_password = async (req, res) => {
 
     const { email } = req.body;
-    
-    if(!email) return res.status(400).json({ message: 'El correo es requerido' });
+
+    if (!email) return res.status(400).json({ message: 'El correo es requerido' });
 
     const user = await User.findOne({ email });
 
     if (!user) return res.status(404).json({ message: 'Usuario no encontrado' });
 
-    res.status(200).json({ 
-        message: 'Usuario encontrado'
-    });
+    // Generar el token de recuperación
+    const token = jwt.sign({ id: user._id }, TOKEN_SECRET, { expiresIn: '1h' });
+
+    // Construir la URL de recuperación de contraseña
+    const resetUrl = `${FRONTEND_URL}/reset-password/${token}`;
+
+    // Configurar las opciones del correo
+    const mailOptions = {
+        to: email,
+        subject: 'Recuperación de contraseña',
+        html: `<p>Haz clic <a href="${resetUrl}">aquí</a> para restablecer tu contraseña. Este enlace es válido por 1 hora.</p>`,
+    };
+
+    // Enviar el correo
+    await transporter.sendMail(mailOptions);
+
+    return res.status(200).json({ message: 'Correo de recuperación enviado' });
 };
 
 export const verifyKeyword = async (req, res) => {
@@ -234,10 +248,10 @@ export const verifyKeyword = async (req, res) => {
 export const reset_password = async (req, res) => {
     const { token, newPassword } = req.body;
 
-    if(!token || !newPassword) return res.status(400).json({ message: 'La nueva contraseña es requerida' });
+    if (!token || !newPassword) return res.status(400).json({ message: 'La nueva contraseña es requerida' });
 
-    if(newPassword.length < 6) return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres' });
-    
+    if (newPassword.length < 6) return res.status(400).json({ message: 'La contraseña debe tener al menos 6 caracteres' });
+
     try {
         const decoded = jwt.verify(token, TOKEN_SECRET);
 
@@ -246,7 +260,7 @@ export const reset_password = async (req, res) => {
         const hashedPassword = await bcrypt.hash(newPassword, 10);
 
         const userUpdated = await User.findByIdAndUpdate(decoded.id, { password: hashedPassword });
-        
+
         const mailOptions = {
             to: userUpdated.email,
             subject: 'Contraseña actualizada',
