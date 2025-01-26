@@ -10,5 +10,5 @@ export const GMAIL_USER = "javierhdzgon03@gmail.com";
 export const GMAIL_PASS = "ofkk awuw lqfk amri";
 
 //Frontend URL
-export const FRONTEND_URL="http://localhost:5173"
-//export const FRONTEND_URL = "https://gestor-de-tareas-six.vercel.app"
+//export const FRONTEND_URL="http://localhost:5173"
+export const FRONTEND_URL = "https://clinquant-cheesecake-a34f0f.netlify.app"
