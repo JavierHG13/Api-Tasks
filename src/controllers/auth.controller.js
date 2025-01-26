@@ -11,7 +11,7 @@ import { TOKEN_SECRET, FRONTEND_URL } from '../config.js'
 
 // Controlador para registrar un nuevo usuario
 export const register = async (req, res) => {
-    const { email, password, username, realName, lastName, phoneNumber, secretWord } = req.body;
+    const { email, password, realName, lastName, phoneNumber, secretWord } = req.body;
 
     try {
         // Verificar si el correo ya está en uso
@@ -23,7 +23,6 @@ export const register = async (req, res) => {
 
         // Crear un nuevo objeto usuario con los datos proporcionados
         const newUser = new User({
-            username,
             email,
             password: passwordHash,
             realName,

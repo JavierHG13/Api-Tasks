@@ -5,15 +5,6 @@ import { z } from 'zod'; // Importar Zod para definir y validar esquemas de dato
 
 // Esquema de validación para el registro de un usuario
 export const registerSchema = z.object({
-    username: z.string({
-        required_error: 'El usuario es requerido',
-    }).min(3, {
-        message: 'El usuario debe tener al menos 3 caracteres',
-    }).max(20, {
-        message: 'El usuario no debe superar los 20 caracteres',
-    }).regex(/^[a-zA-Z0-9_]+$/, {
-        message: 'El usuario solo puede contener letras, números y guiones bajos',
-    }),
 
     realName: z.string({
         required_error: 'El nombre real es requerido',

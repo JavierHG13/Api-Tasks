@@ -8,13 +8,7 @@
   // Definición del esquema para el modelo de usuario
   const userSchema = new mongoose.Schema(
       {
-          // Campo para el nombre de usuario
-          username: {
-              type: String, // El tipo de dato es una cadena de texto
-              required: true, // Este campo es obligatorio
-              trim: true, // Elimina espacios en blanco al principio y al final del texto
-          },
-          // Campo para el nombre real del usuario
+         // Campo para el nombre real del usuario
           realName: {
               type: String, // El tipo de dato es una cadena de texto
               required: true, // Este campo es obligatorio
