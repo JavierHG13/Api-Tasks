@@ -10,17 +10,15 @@ import cookieParser from 'cookie-parser'; // Middleware para analizar cookies
 import cors from 'cors';  // Middleware para habilitar solicitudes de otros orígenes
 import authRoutes from './routes/auth.routes.js';  // Rutas de autenticación
 import taskRoutes from './routes/tasks.routes.js';  // Rutas de tareas
-
+import { FRONTEND_URL } from './config.js';
 // Crear una instancia de la aplicación Express
 const app = express();  
 
 // Configuración de CORS para permitir solicitudes desde el cliente
 //const URL = process.env.NODE_ENV === 'production' ? 'https://gestor-de-tareas-vert.vercel.app' : 'http://localhost:5173';
-//const URL = 'https://gestor-de-tareas-six.vercel.app';
-URL = 'http://localhost:5173';
 
 app.use(cors({
-    origin: URL,  // Dominio permitido
+    origin: FRONTEND_URL,  // Dominio permitido
     credentials: true  // Habilitar el envío de cookies en las solicitudes
 }));
 

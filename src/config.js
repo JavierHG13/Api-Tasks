@@ -2,8 +2,8 @@ export const TOKEN_SECRET ='some secret key'
 
 
 //MongoDB connection string
-//export const MONGODB_URI = "mongodb+srv://JavierHG13:javierHG12345@cluster0.fjgbw.mongodb.net/db_tasks";
-export const MONGODB_URI = "mongodb://localhost:27017/merndb"
+export const MONGODB_URI = "mongodb+srv://JavierHG13:javierHG12345@cluster0.fjgbw.mongodb.net/db_tasks";
+//export const MONGODB_URI = "mongodb://localhost:27017/merndb"
 
 //Gmail account for sending emails
 export const GMAIL_USER = "javierhdzgon03@gmail.com";
